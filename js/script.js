@@ -88,3 +88,28 @@ retrieveButton.addEventListener("click", () => {
     };
   }
 });
+ // Touch start event listener
+canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault(); // Prevent default touch action
+  isDrawing = true;
+  lastX = e.touches[0].clientX - canvas.offsetLeft;
+  lastY = e.touches[0].clientY - canvas.offsetTop;
+});
+
+// Touch move event listener
+canvas.addEventListener("touchmove", (e) => {
+  e.preventDefault(); // Prevent default touch action
+  if (isDrawing) {
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.touches[0].clientX - canvas.offsetLeft, e.touches[0].clientY - canvas.offsetTop);
+    ctx.stroke();
+    lastX = e.touches[0].clientX - canvas.offsetLeft;
+    lastY = e.touches[0].clientY - canvas.offsetTop;
+  }
+});
+
+// Touch end event listener
+canvas.addEventListener("touchend", () => {
+  isDrawing = false;
+});
